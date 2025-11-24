@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }) => {
             navigate("/profile");
             return "";
         } catch (err) {
-            return "Network error.";
+            return "Invalid credentials";
         }
     };
 
@@ -116,10 +116,10 @@ export const AuthProvider = ({ children }) => {
                 return error.message;
             }
 
-            navigate("/success");
+            navigate("/register");
             return "";
         } catch (err) {
-            return "Network error.";
+            return "Invalid credentials";
         }
     };
 
