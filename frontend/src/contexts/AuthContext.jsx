@@ -53,6 +53,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (username, password) => {
         try {
+            console.log("Backend URL:", BACKEND_URL);
             const res = await fetch(`${BACKEND_URL}/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -82,6 +83,7 @@ export const AuthProvider = ({ children }) => {
             navigate("/profile");
             return "";
         } catch (err) {
+            console.error("Login error:", err);
             return "Network error";
         }
     };
