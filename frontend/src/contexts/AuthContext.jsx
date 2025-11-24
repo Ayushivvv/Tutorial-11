@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const AuthContext = createContext(null);
 
 // Backend URL
-const BACKEND_URL = "http://localhost:3000";
+const BACKEND_URL = "http://localhost:8080";
 
 export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
