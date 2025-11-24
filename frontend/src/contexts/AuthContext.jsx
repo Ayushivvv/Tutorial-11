@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const AuthContext = createContext(null);
 
 // Backend URL
-const BACKEND_URL =  "http://localhost:3000";
+const BACKEND_URL = "http://localhost:3000";
 
 export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }) => {
             console.log("login fetching");
 
             if (!res.ok) {
-                console.log("login failed");
+                console.log("login failed:", res.status);
                 const error = await res.json();
                 return error.message;
             }
@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }) => {
             navigate("/profile");
             return "";
         } catch (err) {
-            return "Invalid credentials";
+            return "Network error";
         }
     };
 
@@ -116,10 +116,10 @@ export const AuthProvider = ({ children }) => {
                 return error.message;
             }
 
-            navigate("/register");
+            navigate("/success");
             return "";
         } catch (err) {
-            return "Invalid credentials";
+            return "Network error";
         }
     };
 
