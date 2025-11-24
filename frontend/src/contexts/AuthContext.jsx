@@ -66,6 +66,7 @@ export const AuthProvider = ({ children }) => {
             console.log("login fetching");
 
             if (!res.ok) {
+                console.log("login failed");
                 const error = await res.json();
                 return error.message;
             }
