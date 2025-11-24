@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext(null);
 
-// Backend URL (from Vite env)
+// Backend URL
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
 export const AuthProvider = ({ children }) => {
@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
             return;
         }
 
-        // verify token → GET /user/me
+        // GET /user/me
         const fetchUser = async () => {
             try {
                 const res = await fetch(`${BACKEND_URL}/user/me`, {
@@ -53,19 +53,35 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (username, password) => {
         try {
+            // debug
+            console.log("login called");
+
             const res = await fetch(`${BACKEND_URL}/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password })
             });
 
+            // debug 
+            console.log("login fetching");
+
             if (!res.ok) {
                 const error = await res.json();
                 return error.message;
             }
 
+            // debug 
+            console.log("login success");
+
             const data = await res.json();
+
+            // debug 
+            console.log("token storing");
+
             localStorage.setItem("token", data.token);
+
+            // debug 
+            console.log("fetching user");
 
             // fetch updated user
             const me = await fetch(`${BACKEND_URL}/user/me`, {
