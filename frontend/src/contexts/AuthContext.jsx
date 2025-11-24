@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext(null);
 
-// Backend URL
-const BACKEND_URL = "http://localhost:8080";
+// Backend URL - uses environment variable, falls back to localhost for development
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
 export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
@@ -53,36 +53,19 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (username, password) => {
         try {
-            // debug
-            console.log("login called");
-
             const res = await fetch(`${BACKEND_URL}/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password })
             });
 
-            // debug 
-            console.log("login fetching");
-
             if (!res.ok) {
-                console.log("login failed:", res.status);
                 const error = await res.json();
                 return error.message;
             }
 
-            // debug 
-            console.log("login success");
-
             const data = await res.json();
-
-            // debug 
-            console.log("token storing");
-
             localStorage.setItem("token", data.token);
-
-            // debug 
-            console.log("fetching user");
 
             // fetch updated user
             const me = await fetch(`${BACKEND_URL}/user/me`, {
@@ -105,27 +88,16 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (userData) => {
         try {
-
-            // debug
-            console.log("register called");
-
             const res = await fetch(`${BACKEND_URL}/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(userData)
             });
 
-            // debug
-            console.log("register fetching");
-
             if (!res.ok) {
-                // debug
-                console.log("register failed:", res.status);
                 const error = await res.json();
                 return error.message;
             }
-            // debug
-            console.log("register success");
 
             navigate("/success");
             return "";
