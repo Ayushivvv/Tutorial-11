@@ -105,16 +105,27 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (userData) => {
         try {
+
+            // debug
+            console.log("register called");
+
             const res = await fetch(`${BACKEND_URL}/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(userData)
             });
 
+            // debug
+            console.log("register fetching");
+
             if (!res.ok) {
+                // debug
+                console.log("register failed:", res.status);
                 const error = await res.json();
                 return error.message;
             }
+            // debug
+            console.log("register success");
 
             navigate("/success");
             return "";
