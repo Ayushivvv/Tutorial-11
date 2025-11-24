@@ -83,7 +83,8 @@ export const AuthProvider = ({ children }) => {
             navigate("/profile");
             return "";
         } catch (err) {
-            console.error("Login error:", err);
+            console.error("Login error details:", err);
+            console.error("Backend URL was:", BACKEND_URL);
             return "Network error";
         }
     };
