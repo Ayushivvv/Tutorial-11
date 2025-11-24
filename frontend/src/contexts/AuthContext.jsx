@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const AuthContext = createContext(null);
 
 // Backend URL
-const BACKEND_URL = "https://backend-production-d4d93.up.railway.app" || "http://localhost:8080";
+const BACKEND_URL = "https://backend-production-d4d93.up.railway.app" //|| "http://localhost:8080";
 
 export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
